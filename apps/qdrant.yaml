@@ -9,6 +9,11 @@ spec:
     repoURL: 'https://qdrant.github.io/qdrant-helm'
     targetRevision: 0.7.5
     chart: qdrant
+    helm:
+      values: |
+        metrics:
+          serviceMonitor:
+            enabled: true
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: ai-infrastructure
