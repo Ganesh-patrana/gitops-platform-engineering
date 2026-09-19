@@ -6,18 +6,3 @@ metadata:
     argocd.argoproj.io/sync-wave: "1"
 spec:
   package: xpkg.upbound.io/upbound/provider-gcp-storage:v0.41.0
----
-apiVersion: gcp.upbound.io/v1beta1
-kind: ProviderConfig
-metadata:
-  name: default
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
-spec:
-  projectID: ganesh-devops-bootcamp
-  credentials:
-    source: Secret
-    secretRef:
-      namespace: crossplane-system
-      name: gcp-secret
-      key: creds
