@@ -1,0 +1,13 @@
+apiVersion: storage.gcp.upbound.io/v1beta1
+kind: Bucket
+metadata:
+  name: ganesh-idp-assets
+  annotations:
+    # This is the actual name of the bucket in GCP
+    crossplane.io/external-name: ganesh-idp-assets-9988
+spec:
+  forProvider:
+    location: ASIA-SOUTH1
+    storageClass: STANDARD
+  providerConfigRef:
+    name: default
