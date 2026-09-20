@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
       - name: inference-engine
-        image: argoproj/rollouts-demo:blue
+        image: argoproj/rollouts-demo:green
         ports:
         - containerPort: 8080
