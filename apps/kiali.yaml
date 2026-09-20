@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: 'https://kiali.org/helm-charts'
-    targetRevision: 1.89.0
+    targetRevision: 1.73.0
     chart: kiali-server
     helm:
       values: |
