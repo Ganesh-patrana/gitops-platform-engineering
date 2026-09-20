@@ -10,9 +10,14 @@ spec:
     targetRevision: 2.3.2
     chart: cost-analyzer
     helm:
-      parameters:
-        - name: kubecostToken
-          value: "a3ViZWNvc3RAdGVzdC5jb20=xm343yadf98"
+      values: |
+        kubecostToken: "a3ViZWNvc3RAdGVzdC5jb20=xm343yadf98"
+        global:
+          prometheus:
+            enabled: false
+            fqdn: "http://observability-stack-kube-p-prometheus.monitoring.svc.cluster.local:9090"
+        prometheus:
+          enabled: false
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: kubecost
