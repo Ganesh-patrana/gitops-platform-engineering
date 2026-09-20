@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubecost
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://kubecost.github.io/cost-analyzer/'
+    targetRevision: 2.3.2
+    chart: cost-analyzer
+    helm:
+      parameters:
+        - name: kubecostToken
+          value: "a3ViZWNvc3RAdGVzdC5jb20=xm343yadf98"
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: kubecost
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
