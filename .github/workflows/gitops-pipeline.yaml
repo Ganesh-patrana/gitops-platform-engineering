@@ -1,0 +1,36 @@
+name: GitOps Image Promotion
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: 'Container Image Tag (e.g., v2.0.0, green-release)'
+        required: true
+        default: 'v2.0.0'
+        
+permissions:
+  contents: write
+  
+jobs:
+  promote-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout GitOps Repository
+        uses: actions/checkout@v4
+        
+      - name: Patch Kubernetes Manifests
+        run: |
+          echo "Simulating CI build for image tag: ${{ github.event.inputs.image_tag }}"
+          # We will use 'sed' to dynamically find and replace the image tag in our workloads
+          # This assumes you have an image tag in a deployment, we'll replace the word 'blue' or 'latest'
+          find workloads/ -type f -name "*.yaml" -exec sed -i "s/image: .*rag-inference.*/image: my-registry\/rag-inference:${{ github.event.inputs.image_tag }}/g" {} +
+          
+      - name: Commit and Push to GitOps Repo
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          git add workloads/
+          
+          # Only commit if 'sed' actually changed something
+          git diff --quiet && git diff --staged --quiet || \
+          (git commit -m "Automated Release: Update inference image to ${{ github.event.inputs.image_tag }} [skip ci]" && git push)
